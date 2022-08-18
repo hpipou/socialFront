@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -8,7 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  constructor(private registerService: AuthService) { }
 
   formRegister:any
   ngOnInit(): void {
@@ -19,8 +21,25 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  successStatus=false
+  successMSG=""
+  errorStatus=false
+  errorMSG=""
   inscription(){
-
+    this.registerService.register(this.formRegister.value).subscribe(
+      (data)=>{
+        this.formRegister.reset();
+        this.successStatus=true;
+        this.successMSG=data;
+        setTimeout(()=>{this.successStatus=false}, 10000)
+      },
+      (err)=>{
+        this.errorStatus=true;
+        this.errorMSG=err.error;
+        setTimeout(()=>{this.errorStatus=false}, 4000)
+      },
+      ()=>{console.log("Operation complete")}
+    )
   }
 
 }

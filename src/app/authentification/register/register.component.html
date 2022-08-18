@@ -45,5 +45,11 @@
       </div>
     </div>
     <button [disabled]="formRegister.invalid" class="btn btn-success" type="submit">S'INSCRIRE</button>
+    <div  *ngIf="errorStatus" class="alert alert-danger mt-3 flip-horizontal-bottom" role="alert">
+      {{errorMSG}}
+    </div>
+    <div  *ngIf="successStatus" class="alert alert-success mt-3 flip-horizontal-bottom" role="alert">
+      {{successMSG}}
+    </div>
   </form>
 </div>
