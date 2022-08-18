@@ -6,6 +6,10 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./authentification/authentification.module').then(m => m.AuthentificationModule)
   },
+  {
+    path: 'profil',
+    loadChildren: () => import('./profil/profil.module').then(m => m.ProfilModule)
+  },
 ];
 
 @NgModule({
