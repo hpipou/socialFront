@@ -1,1 +1,131 @@
-<p>editprofil works!</p>
+<nav>
+  <div class="conteneur">
+    <div class="logo">
+      <img src="../../../assets/social.png" alt="image de logo">
+      <p class="h5 ms-2 mb-0">LAMSOCIAL</p>
+    </div>
+    <div class="profil">
+      <p class="h5 me-2 mb-0">HPIPOU</p>
+      <img src="../../../assets/user.png" alt="image de profil">
+    </div>
+  </div>
+</nav>
+
+<section class="main">
+  <div class="conteneurProfil">
+    <div class="leftSide">
+      <button (click)="myprofil()" type="button" class="btn btn-primary"><i class="fa-solid fa-user"></i> MY PROFIL</button>
+      <button (click)="editprofil()" type="button" class="btn btn-secondary"><i class="fa-solid fa-pen-to-square"></i> EDIT PROFIL</button>
+      <button (click)="statistics()" type="button" class="btn btn-success"><i class="fa-solid fa-ranking-star"></i> STATISTICS</button>
+      <button (click)="changePassword()" type="button" class="btn btn-danger"><i class="fa-solid fa-lock"></i> CHANGE PASSWORD</button>
+      <button (click)="deleteAccount()" type="button" class="btn btn-warning"><i class="fa-solid fa-trash-can"></i> DELETE ACCOUNT</button>
+      <button (click)="disconnect()" type="button" class="btn btn-info"><i class="fa-solid fa-right-from-bracket"></i> DISCONNECT</button>
+    </div>
+
+    <div class="mainContent">
+      <div *ngIf="valeur=='myprofil'">
+        <ul class="list-group">
+          <li class="list-group-item" aria-current="true">ID : {{myprofilData.id}} </li>
+          <li class="list-group-item">Username : {{myprofilData.username}} </li>
+          <li class="list-group-item">Email :  {{myprofilData.email}} </li>
+          <li class="list-group-item">Administrateur : <span *ngIf="myprofilData.isAdmin==true">oui</span>  <span *ngIf="myprofilData.isAdmin==false">non</span> </li>
+          <li class="list-group-item">Nom : {{myprofilData.lname}} </li>
+          <li class="list-group-item">Prenom :  {{myprofilData.fname}} </li>
+          <li class="list-group-item">Mobile : {{myprofilData.mobile}} </li>
+          <li class="list-group-item">Ville : {{myprofilData.city}} </li>
+          <li class="list-group-item">Pays : {{myprofilData.country}} </li>
+          <li class="list-group-item">Compte crée le : {{myprofilData.createdAt}} </li>
+        </ul>
+      </div>
+      <div *ngIf="valeur=='editprofil'">
+        <form [formGroup]="formGroupEditProfi" (ngSubmit)="saveEditProfil()">
+          <label for="fname">Prénom</label>
+          <input class="form-control mb-2"  type="text" id="fname" name="fname" formControlName="fname">
+          <label for="lname">Nom de famille</label>
+          <input class="form-control mb-2"  type="text" id="lname" name="lname" formControlName="lname">
+          <label for="mobile">Mobile</label>
+          <input class="form-control mb-2"  type="mobile" id="mobile" name="mobile" formControlName="mobile">
+          <label for="city">Ville</label>
+          <input class="form-control mb-2"  type="city" id="city" name="city" formControlName="city">
+          <label for="country">Pays</label>
+          <input class="form-control mb-2" type="country" id="country" name="country" formControlName="country">
+          <button type="submit" [disabled]="formGroupEditProfi.invalid" class="btn btn-success">ENREGISTRER</button>
+          <div *ngIf="successStatus" class="alert alert-success mt-3 flip-horizontal-bottom" role="alert">
+            {{successMSG}}
+          </div>
+          <div *ngIf="errorStatus" class="alert alert-danger mt-3 flip-horizontal-bottom" role="alert">
+            {{errorMSG}}
+          </div>
+        </form>
+      </div>
+      <div *ngIf="valeur=='statistics'">
+        <div class="divCarreStats">
+          <div class="carreStats">
+            <p>PUBLICATIONS</p>
+            <img src="../../../assets/img_pub.png" alt="image stats publication">
+            <p class="h1">{{statsData.pub}}</p>
+          </div>
+          <div class="carreStats">
+            <p>COMMENTAIRES</p>
+            <img src="../../../assets/img_com.png" alt="image stats publication">
+            <p class="h1">{{statsData.com}}</p>
+          </div>
+        </div>
+        <div class="divCarreStats">
+          <div class="carreStats">
+            <p>LIKES</p>
+            <img src="../../../assets/img_lik.png" alt="image stats publication">
+            <p class="h1">{{statsData.lik}}</p>
+          </div>
+          <div class="carreStats">
+            <p>DISLIKES</p>
+            <img src="../../../assets/img_dis.png" alt="image stats publication">
+            <p class="h1">{{statsData.dis}}</p>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="valeur=='changePassword'">
+        <div class="donIMG">
+          <img src="../../../assets/change_mdp.png" class="imgChangeMDP flip-horizontal-bottom" alt="image cadena changer mot de passe">
+        </div>
+        <form [formGroup]="formGroupchangeMDP" (ngSubmit)="enregistrerMDPChange()">
+          <label for="ancienpassword">Ancien mot de passe</label>
+          <input class="form-control mb-2"  type="password" id="ancienpassword" name="ancienpassword" formControlName="ancienpassword">
+          <label for="password">Nouveau mot de passe</label>
+          <input class="form-control mb-2"  type="password" id="password" name="password" formControlName="password">
+          <button type="submit" [disabled]="formGroupchangeMDP.invalid" class="btn btn-success">ENREGISTRER</button>
+          <div *ngIf="successStatusMDP" class="alert alert-success mt-3 flip-horizontal-bottom" role="alert">
+            {{successMSGMDP}}
+          </div>
+          <div *ngIf="errorStatusMDP" class="alert alert-danger mt-3 flip-horizontal-bottom" role="alert">
+            {{errorMSGMDP}}
+          </div>
+        </form>
+      </div>
+      <div *ngIf="valeur=='deleteAccount'">
+        <div class="donIMG">
+          <img src="../../../assets/delete_user.png" class="imgChangeMDP flip-horizontal-bottom" alt="image cadena changer mot de passe">
+        </div>
+        <form [formGroup]="formGroupDeleteUser" (ngSubmit)="deleteMyAccount()">
+          <label for="password">Nouveau mot de passe</label>
+          <input class="form-control mb-2"  type="password" id="password" name="password" formControlName="password">
+          <button type="submit" [disabled]="formGroupDeleteUser.invalid" class="btn btn-danger">DELETE MY ACCOUNT</button>
+          <div *ngIf="successStatusDelete" class="alert alert-success mt-3 flip-horizontal-bottom" role="alert">
+            {{successMSGDelete}}
+          </div>
+          <div *ngIf="errorStatusDelete" class="alert alert-danger mt-3 flip-horizontal-bottom" role="alert">
+            {{errorMSGDelete}}
+          </div>
+        </form>
+      </div>
+      <div *ngIf="valeur=='disconnect'">
+        <div class="donIMG mt-4">
+          <img src="../../../assets/disconnect.png" class="imgChangeMDP flip-horizontal-bottom" alt="image cadena changer mot de passe">
+        </div>
+        <div class="d-flex justify-content-center mt-5">
+          <p class="h2">LOGOUT IN {{counterDown}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

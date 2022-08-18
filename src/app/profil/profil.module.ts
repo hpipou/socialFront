@@ -5,6 +5,7 @@ import { ProfilRoutingModule } from './profil-routing.module';
 import { ViewprofilComponent } from './viewprofil/viewprofil.component';
 import { EditprofilComponent } from './editprofil/editprofil.component';
 import { NotfoundprofilComponent } from './notfoundprofil/notfoundprofil.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { NotfoundprofilComponent } from './notfoundprofil/notfoundprofil.compone
   ],
   imports: [
     CommonModule,
-    ProfilRoutingModule
+    ProfilRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class ProfilModule { }
