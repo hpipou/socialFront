@@ -1,1 +1,37 @@
-<p>login works!</p>
+<div class="btnLoginRegister">
+  <img src="../../../assets/arrow_left_to_right.gif" alt="">
+  <a routerLink="/auth/register" class="btn btn-primary ms-3 me-3">S'INSCRIRE</a>
+  <button class="btn btn-light" disabled>SE CONNECTER</button>
+</div>
+<div class="conteneurForm">
+  <form class="flip-horizontal-bottom" [formGroup]="formLogin" (ngSubmit)="connexion()">
+    <label for="email"><i class="fa-solid fa-envelope"></i> Adresse Email</label>
+    <input class="form-control mb-3"  type="text" placeholder="Adresse email" name="email" id="email" formControlName="email">
+    <div *ngIf="formLogin.get('email').touched">
+      <div  *ngIf="formLogin.get('email').hasError('required')" class="alert alert-danger" role="alert">
+        Ce champs ne peut pas être vide
+      </div>
+      <div  *ngIf="formLogin.get('email').hasError('email')" class="alert alert-danger" role="alert">
+        L'adresse email est incorrecte
+      </div>
+      <div  *ngIf="formLogin.get('email').hasError('maxlength')" class="alert alert-danger" role="alert">
+        L'adresse email ne doit pas dépasser 30 caractères
+      </div>
+    </div>
+    <label for="password"><i class="fa-solid fa-key"></i> Mot de passe</label>
+    <input class="form-control mb-4" type="password" placeholder="Mot de passe" name="password" id="password" formControlName="password">
+    <div *ngIf="formLogin.get('password').touched">
+      <div  *ngIf="formLogin.get('password').hasError('required')" class="alert alert-danger" role="alert">
+        Ce champs ne peut pas être vide
+      </div>
+      <div  *ngIf="formLogin.get('password').hasError('minlength')" class="alert alert-danger" role="alert">
+        Le mot de passe doit avoir au minimum 4 caractères
+      </div>
+      <div  *ngIf="formLogin.get('password').hasError('maxlength')" class="alert alert-danger" role="alert">
+        Le mot de passe ne doit pas dépasser 20 caractères
+      </div>
+    </div>
+    <button [disabled]="formLogin.invalid" class="btn btn-success" type="submit">SE CONNECTER</button>
+  </form>
+</div>
+
